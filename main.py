@@ -3,7 +3,7 @@ from fastapi import FastAPI, HTTPException
 app = FastAPI()
 
 players = [
-    {"jersey_no": 10, "name": "Lionel Messi", "club_name": "FC Barcelona", "mvp": True},
+    {"jersey_no": 10, "name": "Lionel", "club_name": "FC Barcelona", "mvp": True},
     {"jersey_no": 7, "name": "Cristiano Ronaldo", "club_name": "Juventus FC", "mvp": False},
     {"jersey_no": 11, "name": "Neymar Jr.", "club_name": "Paris Saint-Germain", "mvp": True},
     {"jersey_no": 9, "name": "Robert Lewandowski", "club_name": "Bayern Munich", "mvp": False},
@@ -28,7 +28,7 @@ async def about() -> list[dict]:
     return players
 
 
-@app.get("/players/{jersey_no}")
+@app.get("/players/jersey_no/{jersey_no}")
 async def player_jerseyno(jersey_no: int) -> dict:
     for player in players:
         if player["jersey_no"] == jersey_no:
@@ -36,7 +36,7 @@ async def player_jerseyno(jersey_no: int) -> dict:
     return {"message": "Player not found"}
 
 
-@app.get("/players/{name}")
+@app.get("/players/name/{name}")
 async def get_player(name: str) -> dict:
     player = next((player for player in players if player["name"] == name), None)
     if player is None:
